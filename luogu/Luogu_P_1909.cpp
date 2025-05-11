@@ -1,35 +1,27 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> PII;
-vector<PII> mp;
 int n;
+struct Data
+{
+  int cnt;
+  int sale;
+} d[3];
 
 int main()
 {
   cin >> n;
   for (int i = 0; i < 3; i++)
   {
-    int a, b;
-    cin >> a >> b;
-    mp.push_back({b, a});
-    // cin >> mp[i].second >> mp[i].first;
+    cin >> d[i].cnt >> d[i].sale;
   }
-  sort(mp.begin(), mp.end());
-  int p = 0;
+
+  int res = INT_MAX; // 初始化为极大值
   for (int i = 0; i < 3; i++)
   {
-    PII x = mp[i];
-    cout << x.first << " " << x.second << endl;
-    if (x.second > n)
-    {
-      p += n * x.first;
-    }
-    else
-    {
-      p += x.second * x.first;
-      n -= x.second;
-    }
+    int required = (n + d[i].cnt - 1) / d[i].cnt; // 计算所需包数
+    int cost = required * d[i].sale;
+    res = min(res, cost); // 更新最小花费
   }
-  cout << p << endl;
+  cout << res << endl;
   return 0;
 }
