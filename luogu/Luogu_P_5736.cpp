@@ -1,32 +1,28 @@
-#include <iostream>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
+int n;
 
-const int N= 1000010;
-
-int primes[N], cnt;
-bool st[N];
-
-void get_primes(int n)
+bool is_prime(int x)
 {
-    for (int i = 2; i <= n; i ++ )
-    {
-        if (st[i]) continue;
-        primes[cnt ++ ] = i;
-        for (int j = i + i; j <= n; j += i)
-            st[j] = true;
-    }
+  if (x < 2)
+    return false;
+  for (int i = 2; i <= x / i; i++)
+  {
+    if (x % i == 0)
+      return false;
+  }
+  return true;
 }
 
 int main()
 {
-    int n;
-    cin >> n;
-
-    get_primes(n);
-
-    cout << cnt << endl;
-
-    return 0;
+  cin >> n;
+  while (n--)
+  {
+    int x;
+    cin >> x;
+    if (is_prime(x))
+      cout << x << " ";
+  }
+  return 0;
 }
