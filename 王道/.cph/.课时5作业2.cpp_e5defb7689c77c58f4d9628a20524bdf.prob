@@ -1,0 +1,1 @@
+{"name":"Local: 课时5作业2","url":"e:\\document\\考研\\408\\OJ\\王道\\课时5作业2.cpp","tests":[{"id":1748673691155,"input":"hello","output":"-1"},{"id":1748673747435,"input":"cba","output":"1"},{"id":1748673754614,"input":"aba","output":"0"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\document\\考研\\408\\OJ\\王道\\课时5作业2.cpp","group":"local","local":true}

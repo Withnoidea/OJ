@@ -1,26 +1,46 @@
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
-const int N = 10;
-int a[N];
-vector<int> res;
 
 int main()
 {
-  int n = 5;
-  res.push_back(0);
-  for (int i = 1; i <= 5; i++)
+  int T;
+  cin >> T;
+  string s;
+  while (T--)
   {
-    cin >> a[i];
-    res.push_back(a[i]);
+    cin >> s;
+    int lgr_count = 0;
+    int csp_count = 0;
+    vector<int> lgr_pos;
+    vector<int> csp_pos;
+    for (int i = 0; i + 2 < s.size(); ++i)
+    {
+      if (s.substr(i, 3) == "LGR")
+      {
+        lgr_count++;
+        lgr_pos.push_back(i);
+      }
+      if (s.substr(i, 3) == "CSP")
+      {
+        csp_count++;
+        csp_pos.push_back(i);
+      }
+    }
+    if (lgr_count == 0 || csp_count == 0)
+    {
+      cout << 0 << endl;
+      continue;
+    }
+    if (lgr_count <= csp_count)
+    {
+      cout << 1 << endl;
+    }
+    else
+    {
+      cout << 1 << endl;
+    }
   }
-
-  sort(a + 1, a + 1 + 5);
-  sort(res.begin() + 1, res.end());
-  for (int i = 1; i <= 5; i++)
-  {
-    cout << a[i] << " ";
-  }
-  cout << endl;
-  for (auto x : res)
-    cout << x << " ";
+  return 0;
 }
