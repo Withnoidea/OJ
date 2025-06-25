@@ -2,13 +2,7 @@
 
 [TOC]
 
-
-
-算法刷题记录----这是一个伟人的成长史
-声明：这是伟人的成长史 != 这个人是史
-https://www.acwing.com/user/myspace/index/228437/
-
-目录
+# 目录
 
 ## acwing
 
@@ -16,18 +10,26 @@ https://www.acwing.com/user/myspace/index/228437/
 
 ## codeforces
 
+记录参加的CF的比赛题目，以及赛后补题
+
 ## leetcode
 
 经典100题刷题记录
 
 ## luogu
 
-洛谷提单刷题记录
+洛谷题单刷题记录
+
+洛谷比赛刷题记录
 
 ## PTA
 
 PAT甲乙级刷题记录
 
-## 模板
+## CSP-CCF
 
-## 语法基础
+CSP-CCF刷题记录
+
+## 算法上机实战指南
+
+记录算法上机实战指南遇到的题目
