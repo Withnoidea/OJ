@@ -1,5 +1,6 @@
 {
   "files.associations": {
+    "*.vue": "vue",
     "unordered_map": "cpp",
     "iostream": "cpp",
     "ostream": "cpp",
@@ -93,7 +94,8 @@
     "typeindex": "cpp",
     "typeinfo": "cpp",
     "valarray": "cpp",
-    "variant": "cpp"
+    "variant": "cpp",
+    "b1008": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled"
 }
