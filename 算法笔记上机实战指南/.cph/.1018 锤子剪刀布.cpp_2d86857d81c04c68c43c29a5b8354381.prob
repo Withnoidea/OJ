@@ -1,0 +1,1 @@
+{"name":"Local: 1018 锤子剪刀布","url":"e:\\document\\考研\\408\\OJ\\算法笔记上机实战指南\\1018 锤子剪刀布.cpp","tests":[{"id":1751458725521,"input":"10\nC J\nJ B\nC B\nB B\nB C\nC C\nC B\nJ B\nB C\nJ J","output":"5 3 2\n2 3 5\nB B"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\document\\考研\\408\\OJ\\算法笔记上机实战指南\\1018 锤子剪刀布.cpp","group":"local","local":true}

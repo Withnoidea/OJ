@@ -1,0 +1,1 @@
+{"name":"Local: I’m stuck!","url":"e:\\document\\考研\\408\\OJ\\acwing\\CSP-CCF\\I’m stuck!.cpp","tests":[{"id":1751464285042,"input":"5 5\n--+-+\n..|#.\n..|##\nS-+-T\n####.","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\document\\考研\\408\\OJ\\acwing\\CSP-CCF\\I’m stuck!.cpp","group":"local","local":true}
