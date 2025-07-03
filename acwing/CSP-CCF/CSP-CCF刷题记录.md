@@ -363,3 +363,203 @@ int main()
 }
 ```
 
+# 第一次CCF计算机软件能力认证
+
+## [AcWing 3197. 相反数](https://www.acwing.com/activity/content/problem/content/3504/)
+
+题意: n 个数字种寻找相反数的对数。
+
+思路：用set存每个数字，存取当前x之前，先查询是否出现了-x,出现则寻找到一对数相反数，答案res ++，最后输出答案。
+
+set底层基于红黑数，红黑树是一种自平衡的二叉搜索树，能够保证插入、删除和查找操作的时间复杂度为 O(log N)。
+
+1 log 1 + 2 lopg 2 + … + n log n 则最后时间复杂度应该在nlogn级别
+
+```c++
+#include <iostream>
+#include <set>
+using namespace std;
+set<int> st;
+int n;
+int res;
+
+int main()
+{
+    cin >> n;
+    while (n -- )
+    {
+        int x;
+        cin >> x;
+        res += (st.count(-x));
+        st.insert(x);
+    }
+    
+    cout << res << endl;
+    return 0;
+}
+```
+
+其他看到的参考做法，s数组存储每次读取的x的数量，也就是s[x] ++,  s为负数，存s[abs（x）] ++，最后s中2的数量就是答案res, 自己理解后写的一遍代码. O（n）
+
+```c++
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+using namespace std;
+const int N = 1010;
+int s[N];
+int n;
+int res;
+
+int main()
+{
+    cin >> n;
+    while (n -- )
+    {
+        int x;
+        cin >> x;
+        s[abs(x)] ++;
+    }
+    
+    for(int i = 0; i < N; i ++)
+    {
+        res += (s[i] == 2);
+    }
+    
+    cout << res << endl;
+    
+    return 0;
+}
+```
+
+## [3198. 窗口](https://www.acwing.com/problem/content/3201/)
+
+题意：模拟窗口点击，判断点击的是第几个窗口。
+
+思路：两个栈模拟窗口，第一个存放所有输入的窗口坐标，每次点击依次从第一个栈弹出，入栈到第二个窗口，找到则输出窗口坐标，最后将第二个栈依次弹出，再入栈第一个窗口，即可保证顺序，找到点击的窗口需要特殊处理，最后入栈（保证在顶。如何映射每个窗口的序号，我的做法很阴间，尝试使用的散列表，将坐标和每个数字相加mod 1007.碰巧过了， 没有处理碰撞。
+
+![image-20250703205339521](https://cdn.jsdelivr.net/gh/Withnoidea/images/image-20250703205339521.png)
+
+```c++
+#include <iostream>
+#include <stack>
+#include <unordered_map>
+using namespace std;
+const int N = 15;
+typedef pair<pair<int, int>, pair<int, int>> PII;
+stack<PII> stk1, stk2;
+unordered_map<int, int> mp;
+int n, m;
+
+int main()
+{
+    cin >> n >> m;
+    for(int i = 1; i <= n; i ++)
+    {
+        
+        int x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+        PII p = {{x1, y1},{x2, y2}};
+        stk1.push(p);
+        mp[(x1 + y1 + x2 + y2 ) % 1007] = i;
+    }
+    while (m -- )
+    {
+        int x, y;
+        cin >> x >> y;
+        bool flag = false;
+        PII target;
+        while(stk1.size())
+        {
+            auto p = stk1.top();
+            stk1.pop();
+            stk2.push(p);
+            if(x >= p.first.first && x <= p.second.first && y >= p.first.second && y <= p.second.second)
+            {
+                cout << mp[(p.first.first + p.first.second + p.second.first + p.second.second) % 1007] << endl;
+                flag = true;
+                target = p;
+                break;
+            }
+        }
+        if(flag == false)
+        {
+            puts("IGNORED");
+            while(stk2.size())
+            {
+                auto p = stk2.top();
+                stk2.pop();
+                stk1.push(p);
+            }
+        }
+        else
+        {
+            stk2.pop();
+            while(stk2.size())
+            {
+                auto p = stk2.top();
+                stk2.pop();
+                stk1.push(p);
+            }
+            stk1.push(target);
+        }
+    }
+    
+    return 0;
+}
+```
+
+参考做法，结构体数组进行存储窗口，修改窗口顺序，只需要修改结构体数组下标。
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 15;
+struct window{
+    int x1, y1, x2, y2, id;
+}w[N];
+
+int n, m;
+
+int get(int x, int y)
+{
+    for(int i = n; i; i --)
+    {
+        if(x >= w[i].x1 && y >= w[i].y1 && x <= w[i].x2 && y <= w[i].y2)
+        {
+            return i;
+        }
+    }
+    return 0;
+}
+
+int main()
+{
+    cin >> n >> m;
+    for(int i = 1; i <= n; i ++)
+    {
+        int x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+        w[i] = {x1, y1, x2, y2, i};
+    }
+    while (m -- )
+    {
+        int x, y;
+        cin >> x >> y;
+        int t = get(x, y);
+        if(!t)
+            puts("IGNORED");
+        else
+        {
+            cout << w[t].id << endl;
+            auto r = w[t];
+            for(int i = t; i < n; i ++)
+                w[i] = w[i + 1];
+            w[n] = r;
+        }
+    }
+    
+    return 0;
+}
+```
+
