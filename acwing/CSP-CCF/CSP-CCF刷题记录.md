@@ -438,7 +438,7 @@ int main()
 
 思路：两个栈模拟窗口，第一个存放所有输入的窗口坐标，每次点击依次从第一个栈弹出，入栈到第二个窗口，找到则输出窗口坐标，最后将第二个栈依次弹出，再入栈第一个窗口，即可保证顺序，找到点击的窗口需要特殊处理，最后入栈（保证在顶。如何映射每个窗口的序号，我的做法很阴间，尝试使用的散列表，将坐标和每个数字相加mod 1007.碰巧过了， 没有处理碰撞。
 
-![image-20250703205339521](https://cdn.jsdelivr.net/gh/Withnoidea/images/image-20250703205339521.png)
+![image-20250703215337284](https://cdn.jsdelivr.net/gh/Withnoidea/images/image-20250703215337284.png)
 
 ```c++
 #include <iostream>
@@ -563,3 +563,59 @@ int main()
 }
 ```
 
+## [3199. 命令行选项 ](https://www.acwing.com/problem/content/3202/)
+
+[C++ stringstream 简单使用-CSDN博客](https://blog.csdn.net/weixin_45867382/article/details/122109133)
+
+用unordered_map<char, int> mp;记录每个指令参数类型 mp[x] = 1 为无参 2为有参， stringstream对命令行参数进行处理，map<char, string>  mps 存储每个命令，可以认为是存储每个合法单词，根据mp判断命令类型，输出指令
+
+```c==
+#include <bits/stdc++.h>
+using namespace std;
+int n;
+string s;
+unordered_map<char, int> mp;
+
+int main()
+{
+  cin >> s;
+  s += " ";
+  for(int i = 0; i < s.size(); i ++)
+  {
+    if(s[i+1]==':') mp[s[i]]=2;    //有参字符，标记为2
+    else
+          mp[s[i]]=1; //无参字符，标记为1
+  }
+
+  cin >> n;
+  getchar();
+  for(int i = 1; i <= n; i ++)
+  {
+    map<char, string>  mps;
+    getline(cin, s);
+    stringstream ssin(s);
+    vector<string> str;
+    while(ssin >> s) str.push_back(s);
+    for(int j = 1; j < str.size(); j ++)
+    {
+      if(str[j][0] != '-' || str[j][1] < 'a' || str[j].size() != 2) break;
+      char c = str[j][1];
+      if(mp[c] == 1) mps[c] = c;
+      else if(mp[c] == 2 && (j + 1) < str.size()) mps[c] = str[j + 1], j ++;
+      else break;
+    }
+    cout<<"Case "<<i<<":";
+    for(auto x: mps)
+        if(mp[x.first]==1) cout <<" -"<< x.second;
+        else cout <<" -"<< x.first <<" "<< x.second;
+    cout<<endl;
+  }
+  return 0;
+}
+```
+
+
+
+## 持续更新中~
+
+P.S. 近期时间可能跟不上捏，缓冲期争取3~4天完成一套真题
