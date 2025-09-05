@@ -614,6 +614,299 @@ int main()
 }
 ```
 
+## [3200. 无线网络](https://www.acwing.com/problem/content/3203/)
+
+```c++
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <queue>
+
+#define x first
+#define y second
+
+using namespace std;
+typedef pair<int, int> PII;
+typedef long long LL;
+const int N = 210, M = N * N;
+
+int n, m, k, r;
+int h[N], e[M], ne[M], idx;
+PII p[N];
+int dist[N][N];
+
+bool check(PII a, PII b)
+{
+    LL dx = a.x - b.x;
+    LL dy = a.y - b.y;
+    return dx * dx + dy * dy <= (LL) r * r;
+}
+
+void add(int a, int b)
+{
+    e[idx] = b, ne[idx] = h[a], h[a] = idx ++;
+}
+
+int bfs()
+{
+    queue<PII> q;
+    q.push({1, 0});
+    memset(dist, 0x3f, sizeof dist);
+    dist[1][0] = 0;
+    
+    while(q.size())
+    {
+        auto t = q.front();
+        q.pop();
+        
+        for(int i = h[t.x]; ~i; i = ne[i])
+        {
+            int x = e[i], y = t.y;
+            if(x > n) y ++;
+            if(y <= k)
+            {
+                if(dist[x][y] > dist[t.x][t.y] + 1)
+                {
+                    dist[x][y] = dist[t.x][t.y] + 1;
+                    q.push({x, y});
+                }
+            }
+        }
+    }
+    int res = 1e8;
+    for(int i = 0; i <= k; i ++)
+    {
+        res = min(res, dist[2][i]);
+    }
+    return res - 1;
+}
+
+int main()
+{
+    cin >> n >> m >> k >> r;
+    memset(h, -1, sizeof h);
+    for(int i = 1; i <= n; i ++)
+    {
+        cin >> p[i].x >> p[i].y;
+    }
+    
+    for(int i = n + 1; i <= n + m; i ++)
+    {
+        cin >> p[i].x >> p[i].y;
+    }
+    
+    for(int i = 1; i <= n + m; i ++)
+    {
+        for(int j = i + 1; j <= n + m; j ++)
+        {
+            if(check(p[i], p[j]))
+            {
+                add(i, j), add(j, i);
+            }
+        }
+    }
+    
+    cout << bfs() << endl;
+    
+    return 0;
+}
+```
+
+## [3201. 任务调度](https://www.acwing.com/problem/content/description/3204/) :star2:
+
+![image-20250715234559901](https://cdn.jsdelivr.net/gh/Withnoidea/images/image-20250715234559901.png)
+
+````c++
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+#include <cmath>
+#include <vector>
+
+using namespace std;
+
+const int N = 50, M = 210, INF = 0x3f3f3f3f;
+
+int n;
+int c[N][3];
+int f[2][M][M][M];
+
+int main()
+{
+    cin >> n;
+
+    int m = 0, m2 = 0;
+    for (int i = 1; i <= n; i ++ )
+    {
+        int x, y, z, t;
+        cin >> x >> y >> z >> t;
+        c[i][0] = x, c[i][1] = z, c[i][2] = min(y, t);
+        m += x;
+        if (i % 2) m2 += x;
+    }
+
+    m = max(m2, m - m2);
+
+    memset(f, 0x3f, sizeof f);
+    f[0][0][0][0] = 0;
+    for (int u = 1; u <= n; u ++ )
+        for (int i = 0; i <= m; i ++ )
+            for (int j = i; j <= m; j ++ )
+                for (int k = 0; k <= m; k ++ )
+                {
+                    int& v = f[u & 1][i][j][k];
+                    if (k > j) v = INF;
+                    else
+                    {
+                        register int x = c[u][0], y = c[u][1], z = c[u][2], t = u - 1 & 1;
+                        v = f[u - 1 & 1][i][j][k] + z;
+                        if (i >= x) v = min(v, f[t][i - x][j][k]);
+                        if (j >= x) v = min(v, f[t][min(i, j - x)][max(i, j - x)][k]);
+                        if (i >= y && k >= y)
+                            v = min(v, f[t][i - y][j][k - y]);
+                        if (j >= y && k >= y)
+                            v = min(v, f[t][min(i, j - y)][max(i, j - y)][k - y]);
+                    }
+                }
+
+    int res = INF;
+    n &= 1;
+    for (int i = 0; i <= m; i ++ )
+        for (int j = i; j <= m; j ++ )
+            for (int k = 0; k <= j; k ++ )
+                res = min(res, f[n][i][j][k] + max(i, j));
+
+    cout << res << endl;
+    return 0;
+}
+```
+````
+
+# 第二次CCF计算机软件能力认证
+
+## [3202. 相邻数对 ](https://www.acwing.com/problem/content/3205/)
+
+给定 $n$ 个**不同的**整数，问这些数中有多少对整数，它们的值正好相差 $1$。
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 1010;
+int a[N];
+int n;
+int ans;
+
+int main()
+{
+    cin >> n;
+    for(int i = 1; i <= n; i ++)
+        cin >> a[i];
+        
+    sort(a + 1, a + 1 + n);
+    
+    for(int i = 1; i < n; i ++)
+        if(a[i] + 1 == a[i + 1])
+            ans ++;
+    
+    cout << ans << endl;
+    return 0;
+}
+```
+```
+#include <bits/stdc++.h>
+using namespace std;
+set<int> st;
+int n;
+int cnt;
+
+int main()
+{
+    cin >> n;
+    while (n -- )
+    {
+        int x;
+        cin >> x;
+        if(st.count(x + 1)) cnt ++;
+        if(st.count(x - 1)) cnt ++;
+        st.insert(x);
+    }
+    cout << cnt << endl;
+    
+    return 0;
+}
+```
+
+## [3203. 画图](https://www.acwing.com/problem/content/3206/)
+
+
+
+```
+#include <bits/stdc++.h>
+using namespace std;
+const int N = 110;
+bool st[N][N];
+int g[N][N];
+int n;
+int ans;
+
+int main()
+{
+    cin >> n;
+    while (n -- )
+    {
+        int x1, y1, x2, y2;
+        cin >> x1 >> y1 >> x2 >> y2;
+        for(int i = x1; i < x2; i ++)
+            for(int j = y1; j < y2; j ++)
+                st[i][j] = 1;
+    }
+
+    for(int i = 0; i <= 100; i ++)
+        for(int j = 0; j <= 100; j ++)
+            ans += st[i][j];
+
+    cout << ans << endl;
+    return 0;
+}
+```
+
+## [3204. 字符串匹配](https://www.acwing.com/problem/content/3207/)
+
+```c++
+#include <iostream>
+#include <cstring>
+#include <algorithm>
+
+using namespace std;
+
+const int N = 110;
+
+string get(string str)
+{
+    string res;
+    for (auto c: str)
+        res += tolower(c);
+    return res;
+}
+
+int main()
+{
+    string S;
+    cin >> S;
+    int n, type;
+    cin >> type >> n;
+
+    while (n -- )
+    {
+        string str;
+        cin >> str;
+        if (type && str.find(S) != -1) cout << str << endl;
+        else if (!type && get(str).find(get(S)) != -1) cout << str << endl;
+    }
+    return 0;
+}
+```
+
 
 
 ## 持续更新中~
