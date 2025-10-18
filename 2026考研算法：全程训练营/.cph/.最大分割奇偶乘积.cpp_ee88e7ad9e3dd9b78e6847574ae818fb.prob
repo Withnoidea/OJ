@@ -1,0 +1,1 @@
+{"name":"Local: 最大分割奇偶乘积","url":"e:\\document\\考研\\408\\OJ\\2026考研算法：全程训练营\\最大分割奇偶乘积.cpp","tests":[{"id":1758807517201,"input":"3\n2 3 4","output":"6"},{"id":1758807527121,"input":"5\n1 2 3 4 5","output":"16"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\document\\考研\\408\\OJ\\2026考研算法：全程训练营\\最大分割奇偶乘积.cpp","group":"local","local":true}
