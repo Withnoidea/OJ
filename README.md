@@ -52,4 +52,5 @@
 
 ### CPH 快捷键
 
-ctrl + B
+ctrl + alt + b 运行textCase
+alt+s submit to codeforces
